@@ -1,0 +1,44 @@
+<header>  
+  <nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>  
+    <div class="container">  
+      <a class="navbar-brand" [routerLink]='["/"]'>Employee App</a>  
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"  
+        aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">  
+        <span class="navbar-toggler-icon"></span>  
+      </button>  
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]='{"show": isExpanded}'>  
+        <ul class="navbar-nav flex-grow">  
+          <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>  
+            <a class="nav-link text-dark" [routerLink]='["/"]'>Home</a>  
+          </li>  
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>  
+            <a class="nav-link text-dark" [routerLink]='["/employees"]'>Employees</a>  
+          </li>  
+          <i class="fa fa-bell  has-badge" style="cursor: pointer;" (click)="openModal()"></i>  
+          <div class="numberCircle" *ngIf="notification && notification?.count>0" style="cursor: pointer;"  
+            (click)="openModal()">  
+            {{notification?.count}}</div>  
+        </ul>  
+      </div>  
+    </div>  
+  </nav>  
+</header>  
+<footer>  
+  <nav class="navbar navbar-light bg-white mt-5 fixed-bottom">  
+    <div class="navbar-expand m-auto navbar-text">  
+      Developed with <i class="fa fa-heart"></i> by <b>Sarathlal  
+        Saseendran</b>  
+    </div>  
+  </nav>  
+</footer>  
+  
+<app-modal id="custom-modal">  
+  <button class="btn btn-primary" (click)="deleteNotifications();" style="margin-right: 10px;" [disabled]="notification?.count==0">Delete all Notifications</button>  
+  <button class="btn btn-secondary" (click)="closeModal();">Close</button>  
+  <div style="margin-bottom: 10px;"></div>  
+  <div *ngFor="let msg of messages" [ngSwitch]="msg.tranType">  
+    <h6 *ngSwitchCase="'Add'"><span class="badge badge-success">New employee '{{msg.employeeName}}' added</span></h6>  
+    <h6 *ngSwitchCase="'Edit'"><span class="badge badge-info">Employee '{{msg.employeeName}}' edited</span></h6>  
+    <h6 *ngSwitchCase="'Delete'"><span class="badge badge-warning">Employee '{{msg.employeeName}}' deleted</span></h6>  
+  </div>  
+</app-modal>  
